@@ -1,6 +1,7 @@
 (library
  (name lic)
+ (libraries str)
  (preprocess
   (pps ppx_blob))
  (preprocessor_deps
-  (file ../tmpl/bsd2.txt)))
+  (file ../templates/bsd2.txt)))

@@ -26,6 +26,7 @@
             ])
             ++ (with pkgs.ocamlPackages; [
               ocaml-lsp
+              utop
               ocamlformat
               ppx_blob
             ]);
