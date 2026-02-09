@@ -2,6 +2,7 @@
   lib,
   stdenv,
   perl,
+  makeWrapper,
 }:
 
 stdenv.mkDerivation {
@@ -9,10 +10,15 @@ stdenv.mkDerivation {
   version = "0.1";
   src = ./.;
 
-  nativeBuildInputs = [ perl ];
+  nativeBuildInputs = [
+    perl
+    makeWrapper
+  ];
 
   installPhase = ''
     make install PREFIX=$out
+    wrapProgram $out/bin/lic \
+      --set LICPATH $out/share/lic
   '';
 
   meta = {
