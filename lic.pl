@@ -22,7 +22,10 @@ sub help {
     print "  ~/.local/share/lic\n";
     print "  /usr/share/lic\n";
     print "\nOptions may include:\n";
-    print "  -H, --head: use header variant of <license>\n";
+    print "  -H, --head\n    use header variant of <license>\n";
+    print "  -v, --vars\n    display variables defined in <license>\n";
+    print "  -h, --help\n    display this help message\n";
+    print "  -V, --version\n    display version information\n";
     print "\nEach KEY=VALUE replaces all occurrences of {{KEY}} with VALUE in the template.\n";
     print "Whitespace inside {{ }} is ignored.\n";
     print "\nOuput is written to standard output.\n";
@@ -37,6 +40,8 @@ my $license;
 my $opt_head = 0;
 my $opt_vars = 0;
 my @substs = ();
+my @vars = ();
+my %vars_seen = ();
 my $file;
 
 for my $arg (@ARGV) {
@@ -109,7 +114,8 @@ while (<$input>) {
 
     if ($opt_vars == 1) {
         for my $key ($line =~ /\{\{\s*([^}]+)\s*\}\}/g) {
-            print $key, "\n";
+            # Only push new varaible names
+            push @vars, $key unless $vars_seen{$key}++;
         }
         next;
     }
@@ -123,4 +129,10 @@ while (<$input>) {
 }
 
 close $input or die "can't close file $file: $!\n";
+
+if ($opt_vars == 1) {
+    for my $var (@vars) {
+        print $var, "\n";
+    }
+}
 
