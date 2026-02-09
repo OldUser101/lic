@@ -13,7 +13,7 @@ sub usage {
 
 sub help {
     print "Usage: lic <license> [KEY=VALUE] ...\n";
-    print "\nGenerate license text from a template, optionally substituting variables.\n";
+    print "\nGenerate license text from templates.\n";
     print "\n<license> may be either:\n";
     print "  a path to a license template file, or\n";
     print "  the name of a template in a standard location\n";
