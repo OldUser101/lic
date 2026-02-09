@@ -8,8 +8,8 @@ lic provides license templates for the following licenses:
 
 ### OSI or FSF approved
 
-|-|-|-|
 |Name|ID|SPDX Identifier|
+|-|-|-|
 |GNU Affero General Public License v3.0 or later|`agpl3`|`AGPL-3.0-or-later`|
 |Apache 2.0|`apache2`|`Apache-2.0`|
 |BSD Zero Clause License|`bsd0`|`0BSD`|
@@ -32,8 +32,8 @@ lic provides license templates for the following licenses:
 
 ### Media
 
-|-|-|-|
 |Name|ID|SPDX Identifier|
+|-|-|-|
 |Creative Commons Attribution 4.0 International|`cc_by4`|`CC-BY-4.0`|
 |Creative Commons Attribution Non Commercial 4.0 International|`cc_by_nc4`|`CC-BY-NC-4.0`|
 |Creative Commons Attribution Non Commercial No Derivatives 4.0 International|`cc_by_nc_nd4`|`CC-BY-NC-ND-4.0`|
@@ -43,8 +43,8 @@ lic provides license templates for the following licenses:
 
 ### Others
 
-|-|-|-|
 |Name|ID|SPDX Identifier|
+|-|-|-|
 |Good Luck With That Public License|`glwtpl`|`GLWTPL`|
 |Good Luck With That Sh*t Public License|`glwtspl`||
 
