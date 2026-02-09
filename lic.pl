@@ -23,6 +23,7 @@ sub help {
     print "  /usr/share/lic\n";
     print "\nOptions may include:\n";
     print "  -H, --head\n    use header variant of <license>\n";
+    print "  -s, --spdx\n    use shorter SPDX license header\n";
     print "  -v, --vars\n    display variables defined in <license>\n";
     print "  -h, --help\n    display this help message\n";
     print "  -V, --version\n    display version information\n";
@@ -38,6 +39,7 @@ sub version {
 
 my $license;
 my $opt_head = 0;
+my $opt_spdx = 0;
 my $opt_vars = 0;
 my @substs = ();
 my @vars = ();
@@ -56,6 +58,9 @@ for my $arg (@ARGV) {
     elsif ($arg eq "-H" || $arg eq "--head") {
         $opt_head = 1;
     }
+    elsif ($arg eq "-s" || $arg eq "--spdx") {
+        $opt_spdx = 1;
+    }
     elsif ($arg eq "-v" || $arg eq "--vars") {
         $opt_vars = 1;
     }
@@ -72,9 +77,13 @@ unless (defined $license) {
     exit;
 }
 
-# license headers use .head extension
-if ($opt_head == 1) {
+if ($opt_head == 1 && $opt_spdx == 0) {
+    # license headers use .head extension
     $license .= ".head";
+}
+if ($opt_spdx == 1) {
+    # spdx headers use .head.spdx
+    $license .= ".head.spdx"
 }
 
 if (-f $license) {
@@ -93,12 +102,19 @@ else {
 
     push @search_dirs, "/usr/share/lic";
 
+SCAN_DIRS:
     for my $dir (@search_dirs) {
         my $candidate = File::Spec->catfile($dir, $license);
         if (-f $candidate) {
             $file = $candidate;
             last;
         }
+    }
+
+    if (!$file && $opt_spdx == 0) {
+        $license .= ".spdx";
+        $opt_spdx = 1;
+        goto SCAN_DIRS;
     }
 
     die "license template $license not found in:\n "
