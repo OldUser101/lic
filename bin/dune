@@ -1,4 +1,0 @@
-(executable
- (public_name lic)
- (name main)
- (libraries lic str))

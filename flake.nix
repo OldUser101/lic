@@ -19,17 +19,9 @@
       in
       {
         devShells.default = pkgs.mkShell {
-          buildInputs =
-            (with pkgs; [
-              ocaml
-              dune
-            ])
-            ++ (with pkgs.ocamlPackages; [
-              ocaml-lsp
-              utop
-              ocamlformat
-              ppx_blob
-            ]);
+          buildInputs = with pkgs; [
+            perl
+          ];
         };
       }
     );
