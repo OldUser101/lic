@@ -7,12 +7,12 @@ use File::Basename;
 my $VERSION = "0.1";
 
 sub usage {
-    print "Usage: lic <license> [KEY=VALUE] ...\n";
+    print "Usage: lic <license> [OPTIONS] ... [KEY=VALUE] ...\n";
     print "See 'lic --help' for more information.\n";
 }
 
 sub help {
-    print "Usage: lic <license> [KEY=VALUE] ...\n";
+    print "Usage: lic <license> [OPTIONS] ... [KEY=VALUE] ...\n";
     print "\nGenerate license text from templates.\n";
     print "\n<license> may be either:\n";
     print "  a path to a license template file, or\n";
@@ -21,6 +21,8 @@ sub help {
     print "  directories listed in \$LICPATH (colon-separated)\n";
     print "  ~/.local/share/lic\n";
     print "  /usr/share/lic\n";
+    print "\nOptions may include:\n";
+    print "  -H, --head: use header variant of <license>\n";
     print "\nEach KEY=VALUE replaces all occurrences of {{KEY}} with VALUE in the template.\n";
     print "Whitespace inside {{ }} is ignored.\n";
     print "\nOuput is written to standard output.\n";
@@ -32,6 +34,7 @@ sub version {
 }
 
 my $license;
+my $head = 0;
 my @substs = ();
 my $file;
 
@@ -44,6 +47,9 @@ for my $arg (@ARGV) {
         version;
         exit;
     }
+    elsif ($arg eq "-H" || $arg eq "--head") {
+        $head = 1;
+    }
     elsif (!defined $license) {
         $license = $arg;
     }
@@ -55,6 +61,11 @@ for my $arg (@ARGV) {
 unless (defined $license) {
     usage;
     exit;
+}
+
+# license headers use .head extension
+if ($head == 1) {
+    $license .= ".head";
 }
 
 if (-f $license) {
