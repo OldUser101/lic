@@ -34,7 +34,8 @@ sub version {
 }
 
 my $license;
-my $head = 0;
+my $opt_head = 0;
+my $opt_vars = 0;
 my @substs = ();
 my $file;
 
@@ -48,7 +49,10 @@ for my $arg (@ARGV) {
         exit;
     }
     elsif ($arg eq "-H" || $arg eq "--head") {
-        $head = 1;
+        $opt_head = 1;
+    }
+    elsif ($arg eq "-v" || $arg eq "--vars") {
+        $opt_vars = 1;
     }
     elsif (!defined $license) {
         $license = $arg;
@@ -64,7 +68,7 @@ unless (defined $license) {
 }
 
 # license headers use .head extension
-if ($head == 1) {
+if ($opt_head == 1) {
     $license .= ".head";
 }
 
@@ -102,6 +106,13 @@ open my $input, '<', $file or die "can't open file $file: $!\n";
 while (<$input>) {
     chomp;
     my $line = $_;
+
+    if ($opt_vars == 1) {
+        for my $key ($line =~ /\{\{\s*([^}]+)\s*\}\}/g) {
+            print $key, "\n";
+        }
+        next;
+    }
 
     foreach my $subst (@substs) {
         my ($key, $val) = @$subst;
