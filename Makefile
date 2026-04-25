@@ -8,12 +8,12 @@ all:
 	@echo "Run 'make install' to install lic."
 
 install:
-	mkdir -p $(DESTDIR)$(BINDIR)
-	mkdir -p $(DESTDIR)$(DATADIR)
-	install -m 0755 lic.pl $(DESTDIR)$(BINDIR)/lic
-	install -m 0644 templates/* $(DESTDIR)$(DATADIR)/
+	mkdir -p $(BINDIR)
+	mkdir -p $(DATADIR)
+	install -m 0755 lic.pl $(BINDIR)/lic
+	install -m 0644 templates/* $(DATADIR)/
 
 uninstall:
-	rm -rf $(DESTDIR)$(BINDIR)
-	rm -rf $(DESTDIR)$(DATADIR)
+	rm -rf $(BINDIR)/lic
+	rm -rf $(DATADIR)
 
